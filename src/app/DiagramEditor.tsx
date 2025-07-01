@@ -3,7 +3,7 @@ import React, { useCallback, useRef } from 'react';
 import { ReactFlow, MiniMap, Controls, addEdge, useNodesState, useEdgesState, ReactFlowProvider, Connection, Edge, Node, Handle, Position } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { PlusIcon, DownloadIcon } from '@radix-ui/react-icons';
-import type { NodeProps } from '@xyflow/react';
+import type { NodeProps, ReactFlowInstance } from '@xyflow/react';
 
 const initialNodes: Node[] = [
   { id: '1', position: { x: 100, y: 100 }, data: { label: 'Start' }, type: 'default' },
@@ -87,7 +87,7 @@ function DiagramEditorInner() {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [reactFlowInstance, setReactFlowInstance] = React.useState<unknown>(null);
+  const [reactFlowInstance, setReactFlowInstance] = React.useState<ReactFlowInstance | null>(null);
 
   const onConnect = useCallback((params: Edge | Connection) => setEdges(eds => addEdge(params, eds)), [setEdges]);
 
@@ -110,15 +110,15 @@ function DiagramEditorInner() {
     ]);
   };
 
-  // Export as image
-  const exportImage = async () => {
-    if (!reactFlowInstance) return;
-    const image = await reactFlowInstance.toPng();
-    const a = document.createElement('a');
-    a.href = image;
-    a.download = 'diagram.png';
-    a.click();
-  };
+  // TODO: Export as image is not supported in current ReactFlowInstance type. Feature to be added if/when supported.
+  // const exportImage = async () => {
+  //   if (!reactFlowInstance) return;
+  //   const image = await reactFlowInstance.toPng();
+  //   const a = document.createElement('a');
+  //   a.href = image;
+  //   a.download = 'diagram.png';
+  //   a.click();
+  // };
 
   // When rendering nodes, inject onChange for editing
   const nodesWithEdit = nodes.map(node => ({
@@ -135,7 +135,7 @@ function DiagramEditorInner() {
       {/* Toolbar */}
       <div className="absolute top-4 left-4 z-10 flex gap-2 bg-white/80 dark:bg-black/60 rounded-xl shadow p-2">
         <button className="p-2 rounded hover:bg-blue-100" onClick={addNode} title="Add Node"><PlusIcon /></button>
-        <button className="p-2 rounded hover:bg-blue-100" onClick={exportImage} title="Export as Image"><DownloadIcon /></button>
+        {/* <button className="p-2 rounded hover:bg-blue-100" onClick={exportImage} title="Export as Image"><DownloadIcon /></button> */}
       </div>
       <div ref={reactFlowWrapper} className="w-full h-full rounded-2xl">
         <ReactFlow
