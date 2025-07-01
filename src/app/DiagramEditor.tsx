@@ -11,7 +11,7 @@ const initialNodes: Node[] = [
 const initialEdges: Edge[] = [];
 
 // EditableNode component
-function EditableNode({ id: _id, data, selected, isConnectable }: NodeProps) {
+function EditableNode({ data, selected, isConnectable }: NodeProps) {
   const [editing, setEditing] = React.useState<boolean>(false);
   const [value, setValue] = React.useState<string>(typeof data.label === 'string' ? data.label : '');
   const color = typeof data.color === 'string' ? data.color : '#f3f4f6';
