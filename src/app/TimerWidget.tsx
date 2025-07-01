@@ -83,7 +83,7 @@ export default function TimerWidget() {
           <button
             key={m.key}
             className={`flex items-center gap-1 px-3 py-1 rounded-lg font-medium transition ${mode === m.key ? 'bg-black text-white' : 'bg-white/80 text-black border border-gray-300'}`}
-            onClick={() => { setMode(m.key as any); setRunning(false); }}
+            onClick={() => { setMode(m.key as 'timer' | 'countdown' | 'clock'); setRunning(false); }}
           >
             {m.icon} {m.label}
           </button>

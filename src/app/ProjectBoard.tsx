@@ -67,7 +67,7 @@ export default function ProjectBoard() {
   };
 
   // Edit card
-  const startEditCard = (card: any) => {
+  const startEditCard = (card: Card) => {
     setEditingCardId(card.id);
     setEditTitle(card.title);
     setEditDesc(card.description);

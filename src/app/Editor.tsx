@@ -87,7 +87,7 @@ export default function Editor() {
     if (mode === 'text' && editorRef.current) {
       editorRef.current.innerHTML = pages[currentPage] || '';
     }
-  }, [currentPage, fontSize, mode]);
+  }, [currentPage, fontSize, mode, pages]);
 
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col gap-4">

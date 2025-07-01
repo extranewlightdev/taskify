@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useRef } from 'react';
-import { ReactFlow, MiniMap, Controls, Background, addEdge, useNodesState, useEdgesState, ReactFlowProvider, Connection, Edge, Node, Handle, Position } from '@xyflow/react';
+import { ReactFlow, MiniMap, Controls, addEdge, useNodesState, useEdgesState, ReactFlowProvider, Connection, Edge, Node, Handle, Position } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { PlusIcon, DownloadIcon } from '@radix-ui/react-icons';
 import type { NodeProps } from '@xyflow/react';
@@ -11,9 +11,9 @@ const initialNodes: Node[] = [
 const initialEdges: Edge[] = [];
 
 // EditableNode component
-function EditableNode({ id, data, selected, isConnectable }: NodeProps) {
-  const [editing, setEditing] = React.useState(false);
-  const [value, setValue] = React.useState(typeof data.label === 'string' ? data.label : '');
+function EditableNode({ id: _id, data, selected, isConnectable }: NodeProps) {
+  const [editing, setEditing] = React.useState<boolean>(false);
+  const [value, setValue] = React.useState<string>(typeof data.label === 'string' ? data.label : '');
   const color = typeof data.color === 'string' ? data.color : '#f3f4f6';
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -23,11 +23,11 @@ function EditableNode({ id, data, selected, isConnectable }: NodeProps) {
     }
   }, [editing]);
 
-  const onBlur = () => {
+  const onBlur = (): void => {
     setEditing(false);
     if (typeof data.onChange === 'function') data.onChange(value, color);
   };
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter') {
       setEditing(false);
       if (typeof data.onChange === 'function') data.onChange(value, color);
@@ -87,7 +87,7 @@ function DiagramEditorInner() {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [reactFlowInstance, setReactFlowInstance] = React.useState<any>(null);
+  const [reactFlowInstance, setReactFlowInstance] = React.useState<unknown>(null);
 
   const onConnect = useCallback((params: Edge | Connection) => setEdges(eds => addEdge(params, eds)), [setEdges]);
 
